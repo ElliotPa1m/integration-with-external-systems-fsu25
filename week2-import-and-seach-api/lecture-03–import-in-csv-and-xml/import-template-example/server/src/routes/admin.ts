@@ -61,6 +61,8 @@ router.post('/products/import/:format', async (req, res) => {
 
 
 
+
+
 // Extra: Not included in the labb 1, just an extra assignment if you feel the need to be more challenged
 router.get('/orders/export.csv', (_req, res) => {
 });

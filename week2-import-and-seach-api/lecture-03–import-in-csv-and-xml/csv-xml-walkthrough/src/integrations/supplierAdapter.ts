@@ -76,6 +76,7 @@ export async function getCsvProducts() {
   console.log('[CSV] 5. Our model:', products)
 
   return { text, rows, products }
+  // return { text: "", rows: 0, products: []}
 }
 
 /* --- XML --- */
