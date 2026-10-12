@@ -1,4 +1,4 @@
-import { string, z } from 'zod';
+import { z } from 'zod';
 import { fetchJson } from '../lib/fetchJson.ts';
 
 const BASE_URL = process.env.SUPPLIER_API_URL;

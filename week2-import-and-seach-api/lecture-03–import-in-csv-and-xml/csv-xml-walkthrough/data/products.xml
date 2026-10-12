@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<katalog>
+  <produkt artNr="LEV-1001">
+    <ean>7351001000017</ean>
+    <benamning>T-shirt</benamning>
+    <pris valuta="SEK">599,00</pris>
+    <lagersaldo>12</lagersaldo>
+    <varianter>
+      <variant>S</variant>
+      <variant>M</variant>
+      <variant>L</variant>
+    </varianter>
+  </produkt>
+  <produkt artNr="LEV-1002">
+    <ean>0735100197975</ean>
+    <benamning>Tröja; blå</benamning>
+    <pris valuta="SEK">899,00</pris>
+    <lagersaldo></lagersaldo>
+    <varianter>
+      <variant>M</variant>
+    </varianter>
+  </produkt>
+  <produkt artNr="LEV-1003">
+    <ean>7351001000031</ean>
+    <benamning>Jacka</benamning>
+    <pris valuta="SEK">1299,50</pris>
+    <lagersaldo>3</lagersaldo>
+  </produkt>
+</katalog>
