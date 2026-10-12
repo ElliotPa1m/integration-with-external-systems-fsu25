@@ -14,7 +14,7 @@ const SupplierProduct = z.object({
   benamning: z.string(),
   kategori: z.string(),
   prisOre: z.int().nonnegative(),
-  lagersaldo: z.int(),
+  lagersaldo: z.int().nullable(),
   varianter: z.string(),
   uppdaterad: z.iso.datetime(),
 });
