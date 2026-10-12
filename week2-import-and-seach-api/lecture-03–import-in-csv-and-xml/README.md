@@ -75,6 +75,8 @@ Industries available right now:
 | `kurslitteratur` | Kurslitteratur |
 | `te` | Te |
 | `chilisas` | Chilisås |
+| `bemanning` | Bemanning |
+| `vaxter` | Växter |
 
 
 
