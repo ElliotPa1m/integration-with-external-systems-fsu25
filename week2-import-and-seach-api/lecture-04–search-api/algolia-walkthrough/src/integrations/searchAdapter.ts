@@ -13,7 +13,6 @@ const INDEX_NAME = process.env.ALGOLIA_INDEX ?? 'walkthrough_products'
 /** 
  *  --- 1. INDEX --- 
  */
-const adminClient = algoliasearch(APP_ID, ADMIN_KEY)
 // How a product looks in Algolia: the same fields, but the id must be called objectID.
 
 export async function indexProducts(products: Product[]) {
@@ -28,14 +27,12 @@ export async function indexProducts(products: Product[]) {
 // Otherwise the search still finds products that no longer exist.
 export async function removeProducts(skus: string[]) {
   // Our sku is Algolia's objectID, so we can send the skus as they are.
-  return skus.length
 }
 
 /** 
  *  --- 2. SEARCH --- 
  */
 // The search key may only SEARCH. If it leaks, nobody can change our products.
-const searchClient = algoliasearch(APP_ID, SEARCH_KEY)
 
 export async function searchProducts(searchText: string) {
   // We are only sending in the searchText through ?q=
@@ -45,5 +42,4 @@ export async function searchProducts(searchText: string) {
   // 1. Ask Algolia. Typos are forgiven: "hodie" finds "Hoodie".
  
   // 2. Algolia's model → our model. objectID becomes sku again.
- 
 }
