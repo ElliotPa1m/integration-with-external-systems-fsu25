@@ -10,8 +10,8 @@ const SearchQuery = z.object({
   q: z.string().max(100).default(''),
   category: z.string().max(100).optional(), 
   inStock: z.stringbool().optional(), // 'true' -> true, 'false' -> false, anything else → 400
-  page: z.coerce.number().min(1).default(1), // '2' => 2
-  pageSize: z.coerce.number().min(1).max(50).default(10), // max '50' => 50
+  page: z.coerce.number().int().min(1).default(1), // '2' => 2
+  pageSize: z.coerce.number().int().min(1).max(50).default(10), // max '50' => 50
 });
 
 

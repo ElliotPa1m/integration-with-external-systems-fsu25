@@ -8,6 +8,7 @@ const router = Router()
 // Sends ALL products to Algolia. Needed the first time, and when the index has fallen behind the DB.
 // In your shop the products come from the DB, e.g. right after the import in Labb 1.
 router.post('/search/index', async (_req, res) => {
+  // 1. fetch all products from DB table products
   try {
     const indexed = await indexProducts(products)
     res.json({ indexed })

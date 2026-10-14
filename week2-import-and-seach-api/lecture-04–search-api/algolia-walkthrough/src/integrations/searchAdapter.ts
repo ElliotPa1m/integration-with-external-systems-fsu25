@@ -13,14 +13,38 @@ const INDEX_NAME = process.env.ALGOLIA_INDEX ?? 'walkthrough_products'
 /** 
  *  --- 1. INDEX --- 
  */
+
+const adminClient = algoliasearch(APP_ID, ADMIN_KEY)
 // How a product looks in Algolia: the same fields, but the id must be called objectID.
+type AlgoliaRecord = {
+  objectID: string
+  name: string
+  category: string
+  price: number
+  stock: number
+  description: string
+}
+
 
 export async function indexProducts(products: Product[]) {
   // 1. Our model → Algolia's model. sku becomes objectID.
+  const records: AlgoliaRecord[] = []
+  for (const product of products) {
+    records.push({
+      objectID: product.sku,
+      name: product.name,
+      category: product.category,
+      price: product.price,
+      stock: product.stock,
+      description: product.description,
+    })
+  }
 
   // 2. Send them to Algolia. Same objectID again → the product is updated, not duplicated (upsert).
   // waitForTasks: wait until Algolia is done, so a search right after finds the products.
+  await adminClient.saveObjects({indexName: INDEX_NAME, objects: records, waitForTasks: true})
 
+  return records.length
 }
 
 // Removes products from Algolia, e.g. when they are deleted in the shop.
@@ -33,13 +57,31 @@ export async function removeProducts(skus: string[]) {
  *  --- 2. SEARCH --- 
  */
 // The search key may only SEARCH. If it leaks, nobody can change our products.
-
+const searchClient = algoliasearch(APP_ID, SEARCH_KEY)
 export async function searchProducts(searchText: string) {
   // We are only sending in the searchText through ?q=
   // But we can send in lots of params through querystring to make the searchresult much more functional with filters and pagination
 
 
   // 1. Ask Algolia. Typos are forgiven: "hodie" finds "Hoodie".
+  const response = await searchClient.searchSingleIndex<AlgoliaRecord>({ 
+    indexName: INDEX_NAME, 
+    searchParams: {
+      query: searchText,
+    }
+  });
  
   // 2. Algolia's model → our model. objectID becomes sku again.
+  const products: Product[] = []
+  for (const hit of response.hits) {
+    products.push({
+      sku: hit.objectID,
+      name: hit.name,
+      category: hit.category,
+      price: hit.price,
+      stock: hit.stock,
+      description: hit.description
+    })
+  }
+  return products
 }

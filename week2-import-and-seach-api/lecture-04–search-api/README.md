@@ -12,12 +12,12 @@ After this lecture you can:
 
 - explain why a shop integrates a search service instead of searching with SQL
 - send the shop's products to Algolia and keep the index in sync with the database: create, update and delete
-- build your own search API in Express with free text, filter and pagination, and validate its parameters
+- build your own search API in Express with free text and pagination, and validate its parameters
 - explain why the search service is a copy that can lag behind, and why the database is still the truth
 
 ## 1. Theory
 
-Study `slides.md`: why not just SQL, the search service as a copy, index, record and `objectID`, the two keys, keeping the copy in sync, free text, filter and pagination, and validating the user's parameters with Zod.
+Study `slides.md`: why not just SQL, the search service as a copy, index, record and `objectID`, the two keys, keeping the copy in sync, free text and pagination, and validating the user's parameters with Zod.
 
 ## 2. Code walkthrough: `algolia-walkthrough/`
 
@@ -49,7 +49,7 @@ npm run dev
 
 - Create a free Algolia account. The index is created automatically the first time you send products to it
 - Keep the index in sync with the database: create, update and delete
-- Build your own `GET /api/search` with free text, filter and pagination, and validate the parameters
+- Build your own `GET /api/search` with free text and pagination, and validate the parameters
 - Build a search page in React that only calls your own server
 
 ## 4. Reading instructions
@@ -57,6 +57,5 @@ npm run dev
 - [Algolia: JavaScript API client](https://www.algolia.com/doc/libraries/sdk/install#javascript)
 - [Algolia: incremental updates – add, update and delete records in the index](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/incremental-updates)
 - [Algolia: searchable attributes](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/)
-- [Algolia: filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/)
 - [Algolia: API keys](https://www.algolia.com/doc/guides/security/api-keys/)
 - [Zod documentation](https://zod.dev)

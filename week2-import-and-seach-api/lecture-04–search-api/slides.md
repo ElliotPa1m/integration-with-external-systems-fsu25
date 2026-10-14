@@ -22,7 +22,6 @@ SELECT * FROM products WHERE name ILIKE '%hodie%';   -- 0 hits
 |---|---|
 | "hodie" finds Hoodie (typos) | Nothing |
 | The best hit first (relevance) | Database order |
-| "Hoodies (12) · Mössor (5)" next to the hits | One extra query per filter |
 | An answer while typing | A full table scan per keystroke |
 
 A search service is built for exactly this. We **integrate** it instead of building it.
@@ -109,16 +108,15 @@ Fine for search – but price and stock at checkout always come from the **datab
 
 ---
 
-# A search API has three parts
+# A search API has two parts
 
 ```
-GET /api/search?q=hoodie&category=Hoodies&page=2
+GET /api/search?q=hoodie&page=2
 ```
 
 | Part | Our API | Algolia |
 |---|---|---|
 | Free text | `q` | `query` |
-| Filter | `category`, `inStock` | `filters: 'category:"Hoodies" AND stock > 0'` |
 | Pagination | `page` (from 1), `pageSize` | `page` (from **0**), `hitsPerPage` |
 
 The answer, in **our** format:
@@ -130,39 +128,18 @@ The answer, in **our** format:
 
 # Index settings
 
-Without settings, Algolia searches in **all** fields and can't filter.
+Without settings, Algolia searches in **all** fields – even the price.
 
 ```ts
 await adminClient.setSettings({
   indexName: 'products',
   indexSettings: {
     searchableAttributes: ['name', 'category', 'description'], // order = weight
-    attributesForFaceting: ['category'],                       // may be filtered on
   },
 })
 ```
 
 Settings are made **once** (or when they change) – not on every search.
-
----
-
-# Filter – the user's text in a query
-
-```ts
-filters: `category:"${category}"`
-```
-
-`category = 'Hoodies" OR category:"Jackor'` →
-
-```
-category:"Hoodies" OR category:"Jackor"
-```
-
-The same problem as **SQL injection**. The user's text must never change the filter itself:
-
-```ts
-const safeCategory = category.replaceAll('"', '\\"')
-```
 
 ---
 
@@ -175,7 +152,7 @@ const safeCategory = category.replaceAll('"', '\\"')
 | The question | "Did they send what they promised?" | "Can this product be in our shop?" | "Is this a search we allow?" |
 | On failure | Error | Skip with a reason | **400** with a message |
 
-Everything in `req.query` is text: `page=2` is `'2'`, and `Boolean('false')` is `true`.
+Everything in `req.query` is text: `page=2` is `'2'`, not `2`.
 
 ```ts
 page: z.coerce.number().int().min(1).default(1),
@@ -197,7 +174,7 @@ pageSize: z.coerce.number().int().min(1).max(50).default(12),
 { "sku": "LEV-1001", "name": "Hoodie Svart", "price": 599 }
 ```
 
-- Only the adapter knows `objectID`, `nbHits`, `_highlightResult` and the filter syntax
+- Only the adapter knows `objectID`, `nbHits` and `_highlightResult`
 - Switching to Typesense or Meilisearch should only change **one file**
 
 ---
@@ -216,7 +193,7 @@ The second step of Assignment 1: a search in your shop.
 
 - Products → Algolia, with the article number as `objectID`
 - The index follows the database: import, create, update, delete
-- `GET /api/search` with free text, filter and pagination – validated
+- `GET /api/search` with free text and pagination – validated
 - A search page in React that only calls your own server
 
 *(Go through the requirements and "Klart när" in Labb 2)*
