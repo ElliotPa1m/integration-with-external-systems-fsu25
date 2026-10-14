@@ -9,6 +9,8 @@ const router = Router()
 // In your shop the products come from the DB, e.g. right after the import in Labb 1.
 router.post('/search/index', async (_req, res) => {
   // 1. fetch all products from DB table products
+
+
   try {
     const indexed = await indexProducts(products)
     res.json({ indexed })
@@ -29,9 +31,17 @@ router.post('/products', async (req, res) => {
     description: 'Mjuk strumpor i ekologisk bomull.' 
   }
 
-  // Remember that Algolia is to mirror what is saved in the products table in your DB. Make sure to do the following order when performing CRUD
-  // 1. Save first in DB
-  // 2. If all is well,  index the new product in Algolia. 
+ 
+  try {
+     // Remember that Algolia is to mirror what is saved in the products table in your DB. Make sure to do the following order when performing CRUD
+      // 1. Save first in DB
+      // 2. If all is well,  index the new product in Algolia. 
+    await indexProducts([newProduct])
+    res.status(201).json({ newProduct, searchIndexed: true })
+  } catch (err) {
+    console.warn('Could not index the new product to Algolia:', err)
+    res.status(201).json({ newProduct, searchIndexed: false })
+  }
 })
 
 /* --- UPDATE: PUT /api/admin/products/:sku --- */
@@ -50,6 +60,14 @@ router.put('/products/:sku', async (req, res) => {
   // 2. If all is well, update the product in Algolia.
   // It's the SAME call as for create: saveObjects is an upsert on objectID,
   // so the same sku replaces the old record instead of creating a new one.
+
+  try {
+    await indexProducts([updatedProduct])
+    res.json({ updatedProduct, searchIndexed: true })
+  } catch (err) {
+    console.warn('Could not index the updated product to Algolia:', err)
+    res.json({ updatedProduct, searchIndexed: false })
+  }
 })
 
 /* --- DELETE: DELETE /api/admin/products/:sku --- */

@@ -51,6 +51,13 @@ export async function indexProducts(products: Product[]) {
 // Otherwise the search still finds products that no longer exist.
 export async function removeProducts(skus: string[]) {
   // Our sku is Algolia's objectID, so we can send the skus as they are.
+
+  // Code example beneith from the following docs: https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/incremental-updates#delete-records
+  // 0769451881
+  // const response: BatchResponse[] = await client.deleteObjects({
+  //   indexName: 'INDEX_NAME',
+  //   objectIDs: ['1', '2'],
+  // });
 }
 
 /** 
