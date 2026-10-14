@@ -65,16 +65,30 @@ export async function removeProducts(skus: string[]) {
  */
 // The search key may only SEARCH. If it leaks, nobody can change our products.
 const searchClient = algoliasearch(APP_ID, SEARCH_KEY)
+
+
+
+type SearchParams = {
+  query: string,
+  page: number,
+  pageSize: number
+}
 export async function searchProducts(searchText: string) {
   // We are only sending in the searchText through ?q=
   // But we can send in lots of params through querystring to make the searchresult much more functional with filters and pagination
-
+  const params: SearchParams = {
+    query: searchText,
+    page: 5,
+    pageSize: 2,
+  }
 
   // 1. Ask Algolia. Typos are forgiven: "hodie" finds "Hoodie".
   const response = await searchClient.searchSingleIndex<AlgoliaRecord>({ 
     indexName: INDEX_NAME, 
     searchParams: {
-      query: searchText,
+      query: params.query,
+      page: params.page - 1, // Algolia counts from 0, and we count from 1
+      hitsPerPage: params.pageSize
     }
   });
  
@@ -90,5 +104,11 @@ export async function searchProducts(searchText: string) {
       description: hit.description
     })
   }
-  return products
+
+
+  const total = response.nbHits ?? 0
+  return {
+    data: products,
+    meta: { page: params.page, pageSize: params.pageSize, total: total, totalPages: Math.ceil(total/params.pageSize) }
+  }
 }
