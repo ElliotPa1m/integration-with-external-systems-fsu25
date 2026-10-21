@@ -76,6 +76,6 @@ npm run dev             # http://localhost:5173
 - [Supabase JavaScript: remove](https://supabase.com/docs/reference/javascript/file-buckets-remove)
 
 **Uploading files from React to Express**
-- [HTML input file](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/file)
+- [HTML input file (MDN)](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/file)
 - [FormData (MDN)](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
 - [multer](https://github.com/expressjs/multer)
