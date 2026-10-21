@@ -21,6 +21,8 @@ export default function App() {
         method: 'POST',
         body: form,
       })
+      const data = await response.json()
+      setImage(data)
     } catch(err) {
       console.log(err)
     }

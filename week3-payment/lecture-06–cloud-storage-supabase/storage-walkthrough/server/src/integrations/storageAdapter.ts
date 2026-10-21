@@ -17,6 +17,12 @@ if (!SUPABASE_URL || !SECRET_KEY) {
 }
 
 // Initiating supabase client
+const supabase = createClient(SUPABASE_URL, SECRET_KEY, {
+  global: {
+    fetch: (input, init) => {
+      return fetch(input, {...init, signal: AbortSignal.timeout(TIMEOUT_MS)})
+    }}
+})
 
 
 // The image types we accept, and the file extension each one gets in the bucket.
@@ -25,23 +31,41 @@ type ImageFileType = {
   mimeType: string
 }
 
+
+const EXTENSIONS: Record<string, string> = {
+  'image/png': 'png',
+  'image/jpeg': 'jpg'
+}
+
 /* --- 1. UPLOAD: an image → a file in the bucket → its public URL --- */
 export async function uploadProductImage(sku: string, image: ImageFileType) {
   // 1. A NEW, unique path every time – never the admin's own file name, and never overwrite.
   //    "hoodie.png" from two admins would overwrite each other. And Supabase's CDN can keep showing
   //    an old image for a while if a file is overwritten. A new path = a new URL = no stale image.
-  
+  const extension = EXTENSIONS[image.mimeType]
+  const path = `products/${sku}/${randomUUID()}.${extension}`
+  console.log('\n[UPLOAD] Saved in the bucket:', path)
 
   // 2. Send the bytes to Supabase Storage
-  // console.log('\n[UPLOAD] Saved in the bucket:')
+  const { error } = await supabase.storage.from(BUCKET).upload(path, image.buffer, {
+    contentType: image.mimeType,
+    upsert: false
+  })
+
+  if (error) {
+    throw new Error(`Could not upload the image to supabase: ${error.message}`)
+  }
+  
 
   // 3. The public URL. The bucket is PUBLIC: anyone with the URL can see the image – that's what we want
   //    for product images. getPublicUrl only builds the URL, it doesn't call Supabase.
-  // console.log('[UPLOAD] Public URL:')
+
+  const { data } = supabase.storage.from(BUCKET).getPublicUrl(path)
+  console.log('[UPLOAD] Public URL:', data)
 
 
   // We return BOTH: the path to delete the file later, the URL to show it.
-  return { path: '', url: '' }
+  return { path: path, url: data.publicUrl }
 }
 
 /* --- 2. REMOVE: delete a file we no longer use --- */
