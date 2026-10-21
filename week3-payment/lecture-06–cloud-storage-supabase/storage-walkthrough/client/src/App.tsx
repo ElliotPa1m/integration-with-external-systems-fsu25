@@ -30,9 +30,18 @@ export default function App() {
 
   async function remove() {
     if (!image) return
-    // The walkthrough has no database, so the path is sent in the request.
-    // In your shop: DON'T send the path – call DELETE /api/admin/products/${sku}/image and let the
-    // server fetch the product by sku from the DB and take its image_path from there.
+    try {
+      // The walkthrough has no database, so the path is sent in the request.
+      // In your shop: DON'T send the path – call DELETE /api/admin/products/${sku}/image and let the
+      // server fetch the product by sku from the DB and take its image_path from there.
+      await fetch(`/api/admin/products/${sku}/image?path=${image.path}`, { 
+        method: 'DELETE' 
+      })
+      
+      setImage(null)
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   return (

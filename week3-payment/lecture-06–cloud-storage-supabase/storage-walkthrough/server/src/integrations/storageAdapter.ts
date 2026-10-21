@@ -69,7 +69,10 @@ export async function uploadProductImage(sku: string, image: ImageFileType) {
 }
 
 /* --- 2. REMOVE: delete a file we no longer use --- */
-export async function removeProductImage() {
- 
-  // console.log('\n[REMOVE] Deleted from the bucket:')
+export async function removeProductImage(path: string) {
+  const { error } = await supabase.storage.from(BUCKET).remove([path])
+  if (error) {
+    throw new Error(`Could not delete the image in supabase: ${error.message}`)
+  }
+  console.log('\n[REMOVE] Deleted from the bucket:', path)
 }

@@ -59,7 +59,8 @@ router.post('/products/:sku/image', recieveImage, async (req, res) => {
   // 2. In your shop: fetch the product from the DB by sku – it must exist, and we need its OLD image:
   //    SELECT image_path FROM products WHERE sku = $1      → no row: answer 404
   //    In the walkthrough there is no database, so every valid sku is accepted and there is no old image.
-
+  // const product
+  // const oldImagePath = product.image_path
 
   // 3. Upload to Supabase Storage
   let image
@@ -84,7 +85,7 @@ router.post('/products/:sku/image', recieveImage, async (req, res) => {
   //    If the removal fails: log it and still answer 201. The product shows the new image –
   //    the old file is only left over in the bucket (it can be cleaned up later).
 
-  
+
   res.status(201).json({ path: image.path, url: image.url })
 })
 
@@ -102,7 +103,7 @@ router.delete('/products/:sku/image', async (req, res) => {
 
   // 2. Delete the file from Supabase Storage
   try {
-    await removeProductImage()
+    await removeProductImage(path)
   } catch (err) {
     console.error(err)
     res.status(502).json({ error: 'The image service is not responding. Try again later.' })
