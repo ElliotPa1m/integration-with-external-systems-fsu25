@@ -6,7 +6,7 @@
 - [02 - Getting started with code (Send file from React to Express, retrieving with Multer)](https://medieinstitutet.sharepoint.com/sites/FSU25D/_layouts/15/stream.aspx?id=%2Fsites%2FFSU25D%2FDelade%20dokument%2FIntegration%20med%203%2Dpartssystem%2FRecordings%2FMeeting%20in%20Inspelning%2D20261021%5F130627%2DMeeting%20Recording%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E5ad5c53e%2D2a84%2D470e%2Da5e5%2D6941f4cd3d2f)
 - [03 - Validating the uploaded file with Multer](https://medieinstitutet.sharepoint.com/sites/FSU25D/_layouts/15/stream.aspx?id=%2Fsites%2FFSU25D%2FDelade%20dokument%2FIntegration%20med%203%2Dpartssystem%2FRecordings%2FMeeting%20in%20Inspelning%2D20261021%5F144036%2DMeeting%20Recording%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E1706b3ac%2Dba13%2D46cd%2Da69d%2D55548426fb54)
 - [04 - Upload image to Supabase Storage](https://medieinstitutet.sharepoint.com/sites/FSU25D/_layouts/15/stream.aspx?id=%2Fsites%2FFSU25D%2FDelade%20dokument%2FIntegration%20med%203%2Dpartssystem%2FRecordings%2FMeeting%20in%20Inspelning%2D20261021%5F161656%2DMeeting%20Recording%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Ed9bedf6b%2Dd7dc%2D4186%2D87fe%2Da0f32059f8b2)
-- [05 - Coming soon]()
+- [05 - Delete image from Supabase, and Labb 4](https://medieinstitutet.sharepoint.com/sites/FSU25D/_layouts/15/stream.aspx?id=%2Fsites%2FFSU25D%2FDelade%20dokument%2FIntegration%20med%203%2Dpartssystem%2FRecordings%2FMeeting%20in%20Inspelning%2D20261021%5F173209%2DMeeting%20Recording%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E7c28d90a%2D7961%2D4818%2Da26a%2Dbb95d58489bf)
 
 
 
