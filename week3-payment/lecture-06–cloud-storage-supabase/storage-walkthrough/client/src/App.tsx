@@ -14,6 +14,16 @@ export default function App() {
     if (!file) return
 
     // Files are sent as multipart/form-data – not JSON. FormData builds it for us.
+    const form = new FormData()
+    form.append('image', file)
+    try {
+      const response = await fetch(`/api/admin/products/${sku}/image`, {
+        method: 'POST',
+        body: form,
+      })
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   async function remove() {
@@ -29,12 +39,16 @@ export default function App() {
 
       <form onSubmit={upload}>
         <label>
-          Sku <input type="text" />
+          Sku <input type="text" value={sku} onChange={(e) => setSku(e.target.value)}/>
         </label>
         <label>
           Image
           {/* accept only image/jpeg,image/png. NOTE the SERVER still has to check the file */}
-          <input type="file"/>
+          <input type="file" name="image" accept="image/png, image/jpeg" onChange={(e) => {
+              console.log(e.target.files?.[0] ?? null)
+              setFile(e.target.files?.[0] ?? null)
+            }
+          } />
         </label>
         <button>Upload</button>
       </form>

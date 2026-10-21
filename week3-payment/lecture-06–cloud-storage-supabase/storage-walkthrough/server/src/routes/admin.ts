@@ -9,7 +9,7 @@ const ALLOWED_TYPES = ['image/jpeg', 'image/png']
 
 // multer reads multipart/form-data, the format a browser uses to send files.
 // limits the fileSize to 5MB
-
+const upload = multer()
 
 // Receives ONE file in the field "image". If multer can't read it, we answer 400 with a clear message.
 
@@ -17,7 +17,7 @@ const ALLOWED_TYPES = ['image/jpeg', 'image/png']
 
 
 /* --- UPLOAD: POST /api/admin/products/:sku/image  (multipart/form-data, field "image") → { url } --- */
-router.post('/products/:sku/image', async (req, res) => {
+router.post('/products/:sku/image', upload.single('image'), async (req, res) => {
   // 1. Validate file and sku
   const sku = typeof req.params.sku === 'string' ? req.params.sku : ''
   if (!sku) {
@@ -25,9 +25,7 @@ router.post('/products/:sku/image', async (req, res) => {
     return
   }
 
-
-
-  // console.log('\n[ADMIN] Image for', sku, '–', req.file.originalname, req.file.mimetype, req.file.size, 'bytes')
+  console.log('\n[ADMIN] Image for', sku, '–', req.file.originalname, req.file.mimetype, req.file.size, 'bytes')
 
   // 2. In your shop: fetch the product from the DB by sku – it must exist, and we need its OLD image:
   //    SELECT image_path FROM products WHERE sku = $1      → no row: answer 404
