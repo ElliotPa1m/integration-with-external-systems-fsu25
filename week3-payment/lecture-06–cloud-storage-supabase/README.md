@@ -4,7 +4,8 @@
 ## Video links
 - [01 - Product images in Supabase storage slides](https://medieinstitutet.sharepoint.com/sites/FSU25D/_layouts/15/stream.aspx?id=%2Fsites%2FFSU25D%2FDelade%20dokument%2FIntegration%20med%203%2Dpartssystem%2FRecordings%2FMeeting%20in%20Inspelning%2D20261021%5F114347%2DMeeting%20Recording%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E9ac4eb5b%2Da973%2D41a0%2Dab74%2D07c6a994fd11)
 - [02 - Getting started with code (Send file from React to Express, retrieving with Multer)](https://medieinstitutet.sharepoint.com/sites/FSU25D/_layouts/15/stream.aspx?id=%2Fsites%2FFSU25D%2FDelade%20dokument%2FIntegration%20med%203%2Dpartssystem%2FRecordings%2FMeeting%20in%20Inspelning%2D20261021%5F130627%2DMeeting%20Recording%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E5ad5c53e%2D2a84%2D470e%2Da5e5%2D6941f4cd3d2f)
-- [03 - coming soon ...]()
+- [03 - Validating the uploaded file with Multer](https://medieinstitutet.sharepoint.com/sites/FSU25D/_layouts/15/stream.aspx?id=%2Fsites%2FFSU25D%2FDelade%20dokument%2FIntegration%20med%203%2Dpartssystem%2FRecordings%2FMeeting%20in%20Inspelning%2D20261021%5F144036%2DMeeting%20Recording%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E1706b3ac%2Dba13%2D46cd%2Da69d%2D55548426fb54)
+- [04 - Coming soon](https://medieinstitutet.sharepoint.com/sites/FSU25D/_layouts/15/stream.aspx?id=%2Fsites%2FFSU25D%2FDelade%20dokument%2FIntegration%20med%203%2Dpartssystem%2FRecordings%2FMeeting%20in%20Inspelning%2D20261021%5F144036%2DMeeting%20Recording%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E1706b3ac%2Dba13%2D46cd%2Da69d%2D55548426fb54)
 
 
 

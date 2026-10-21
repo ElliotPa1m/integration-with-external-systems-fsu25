@@ -20,10 +20,13 @@ if (!SUPABASE_URL || !SECRET_KEY) {
 
 
 // The image types we accept, and the file extension each one gets in the bucket.
-
+type ImageFileType = {
+  buffer: Buffer,
+  mimeType: string
+}
 
 /* --- 1. UPLOAD: an image → a file in the bucket → its public URL --- */
-export async function uploadProductImage() {
+export async function uploadProductImage(sku: string, image: ImageFileType) {
   // 1. A NEW, unique path every time – never the admin's own file name, and never overwrite.
   //    "hoodie.png" from two admins would overwrite each other. And Supabase's CDN can keep showing
   //    an old image for a while if a file is overwritten. A new path = a new URL = no stale image.

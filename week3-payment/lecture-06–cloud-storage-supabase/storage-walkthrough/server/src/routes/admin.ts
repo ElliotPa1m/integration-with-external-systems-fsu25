@@ -8,22 +8,51 @@ const MAX_SIZE = 4 * 1024 * 1024 // 4 MB, Matches the Supabase Storage Bucket li
 const ALLOWED_TYPES = ['image/jpeg', 'image/png']
 
 // multer reads multipart/form-data, the format a browser uses to send files.
-// limits the fileSize to 5MB
-const upload = multer()
+// limits the fileSize to 4MB
+const upload = multer({
+  limits: {fileSize: MAX_SIZE}
+})
 
 // Receives ONE file in the field "image". If multer can't read it, we answer 400 with a clear message.
+// 1.1 Validate file
+function recieveImage(req: Request, res: Response, next: NextFunction) {
+  upload.single('image')(req, res, function (err) {
+    if (err instanceof multer.MulterError && err.code === 'LIMIT_FILE_SIZE') {
+      // A Multer error occurred when uploading, in this example, max FILE_SIZE exeeded
+      res.status(400).json({error: `The image is too large. Max ${MAX_SIZE/(1024 * 1024)} MB.`})
+      return
+    } else  if (err) {
+      // An unknown error occurred when uploading.
+      res.status(400).json({error: `Could not read the File. Send ONE image file in the field "image`})
+      return
+    }
 
+    next()
+  })
+}
 
 
 
 /* --- UPLOAD: POST /api/admin/products/:sku/image  (multipart/form-data, field "image") → { url } --- */
-router.post('/products/:sku/image', upload.single('image'), async (req, res) => {
-  // 1. Validate file and sku
+router.post('/products/:sku/image', recieveImage, async (req, res) => {
+  // 1.2 Validate sku and file
   const sku = typeof req.params.sku === 'string' ? req.params.sku : ''
   if (!sku) {
     res.status(400).json({ error: 'Invalid sku' })
     return
   }
+
+  if (!req.file) {
+    res.status(400).json({error: `Missing image. Send the image file in the field "image"`})
+    return
+  }
+
+  if (!ALLOWED_TYPES.includes(req.file.mimetype)) {
+    res.status(400).json({error: `The file is not a JPEG nor PNG image`})
+    return
+  }
+
+
 
   console.log('\n[ADMIN] Image for', sku, '–', req.file.originalname, req.file.mimetype, req.file.size, 'bytes')
 
@@ -35,7 +64,7 @@ router.post('/products/:sku/image', upload.single('image'), async (req, res) => 
   // 3. Upload to Supabase Storage
   let image
   try {
-    image = await uploadProductImage()
+    image = await uploadProductImage(sku, {buffer: req.file.buffer, mimeType: req.file.mimetype})
   } catch (err) {
     console.error(err)
     // The product keeps its old image – nothing has been changed in the DB yet.
@@ -55,7 +84,7 @@ router.post('/products/:sku/image', upload.single('image'), async (req, res) => 
   //    If the removal fails: log it and still answer 201. The product shows the new image –
   //    the old file is only left over in the bucket (it can be cleaned up later).
 
-
+  
   res.status(201).json({ path: image.path, url: image.url })
 })
 
