@@ -110,7 +110,7 @@ await fetch(`/api/admin/products/${sku}/image`, {
 
 ```ts
 const upload = multer({
-  limits: { fileSize: 5 * 1024 * 1024 },
+  limits: { fileSize: 4 * 1024 * 1024 },
 })
 router.post('/products/:sku/image',
   upload.single('image'), handler)
@@ -129,7 +129,7 @@ router.post('/products/:sku/image',
 
 | Check | Why |
 |---|---|
-| **Size** – max 5 MB | multer stops it → 400 |
+| **Size** – max 4 MB | multer stops it → 400 |
 | **The type** – JPEG or PNG | Anything else → 400 |
 | **The sku** | The image must belong to a product |
 
@@ -259,7 +259,7 @@ The secret key still never leaves the server – but the server never sees the f
 # Code walkthrough: `storage-walkthrough/`
 
 1. React: `FormData` → `POST /api/admin/products/:sku/image`
-2. multer: the file as a Buffer, max 5 MB
+2. multer: the file as a Buffer, max 4 MB
 3. Validate: the sku, and that the file is a JPEG or PNG
 4. `uploadProductImage()`: a new path → `upload` → `getPublicUrl`
 5. Comments: save the path and URL, then delete the old image

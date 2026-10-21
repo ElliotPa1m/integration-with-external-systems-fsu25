@@ -4,7 +4,7 @@ import { removeProductImage, uploadProductImage } from '../integrations/storageA
 
 const router = Router()
 
-const MAX_SIZE = 5 * 1024 * 1024 // 5 MB, Matches the Supabase Storage Bucket limit
+const MAX_SIZE = 4 * 1024 * 1024 // 4 MB, Matches the Supabase Storage Bucket limit
 const ALLOWED_TYPES = ['image/jpeg', 'image/png']
 
 // multer reads multipart/form-data, the format a browser uses to send files.
@@ -12,6 +12,9 @@ const ALLOWED_TYPES = ['image/jpeg', 'image/png']
 
 
 // Receives ONE file in the field "image". If multer can't read it, we answer 400 with a clear message.
+
+
+
 
 /* --- UPLOAD: POST /api/admin/products/:sku/image  (multipart/form-data, field "image") → { url } --- */
 router.post('/products/:sku/image', async (req, res) => {
@@ -21,6 +24,8 @@ router.post('/products/:sku/image', async (req, res) => {
     res.status(400).json({ error: 'Invalid sku' })
     return
   }
+
+
 
   // console.log('\n[ADMIN] Image for', sku, '–', req.file.originalname, req.file.mimetype, req.file.size, 'bytes')
 
@@ -70,7 +75,7 @@ router.delete('/products/:sku/image', async (req, res) => {
 
   // 2. Delete the file from Supabase Storage
   try {
-    await removeProductImage(path)
+    await removeProductImage()
   } catch (err) {
     console.error(err)
     res.status(502).json({ error: 'The image service is not responding. Try again later.' })
