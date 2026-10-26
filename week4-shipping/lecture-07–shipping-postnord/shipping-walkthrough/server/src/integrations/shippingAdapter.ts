@@ -41,7 +41,6 @@ const PostNordAnswer = z.object({
   // add here only the fields you want to use
 })
 
-export type PostNordAnswer = z.infer<typeof PostNordAnswer>
 
 // OUR model of a service point – what the rest of the shop sees.
 export type ServicePoint = { id: string; name: string; address: string }

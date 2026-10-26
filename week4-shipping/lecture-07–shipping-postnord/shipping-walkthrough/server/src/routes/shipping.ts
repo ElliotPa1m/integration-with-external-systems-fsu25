@@ -5,7 +5,7 @@ const router = Router()
 
 /* --- SERVICE POINTS: GET /api/shipping/service-points?postalCode=11152 → { servicePoints } --- */
 router.get('/service-points', async (req, res) => {
-  // 1. In your shop: validate the postal code
+  // 1. In your shop: validate the postal code with zod
   //    Invalid → answer 400 with a clear message. The walkthrough skips it and reads the query straight away.
   const postalCode = String(req.query.postalCode ?? '')
 

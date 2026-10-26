@@ -5,7 +5,7 @@ const router = Router()
 
 /* --- CHECKOUT: POST /api/checkout  { method, postalCode, servicePointId? } → { method, servicePoint } --- */
 router.post('/', async (req, res) => {
-  // 1. In your shop: validate the request in your checkout route, e.g. with Zod as in Labb 3 –
+  // 1. In your shop: validate the request in your checkout route with Zod as in Labb 3 –
   //    the cart, the shipping method ('service_point' or 'home'), the postal code and the service point id.
   //    Invalid → answer 400. The walkthrough skips it and reads the body straight away.
   const { method, postalCode, servicePointId } = req.body
