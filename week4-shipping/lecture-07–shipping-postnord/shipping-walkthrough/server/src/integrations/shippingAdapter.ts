@@ -77,5 +77,6 @@ export async function findServicePoints(postalCode: string): Promise<ServicePoin
     address: `${point.visitingAddress.streetName} ${point.visitingAddress.streetNumber}, ${point.visitingAddress.city}`,
   }))
   console.log(`\n[POSTNORD] ${servicePoints.length} service points near ${postalCode}`)
+  console.log(`\n[POSTNORD] JSON answer: ${JSON.stringify(servicePoints, null, 2)}`)
   return servicePoints
 }
